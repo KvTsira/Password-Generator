@@ -3,8 +3,10 @@
 
 // Get references to the #generate  (button)
 var generateBtn = document.querySelector("#generate");
-const lowerCaseCode = myArray(65, 90);
-const upperCaseCode = myArray(97, 122);
+
+//use ASCII codes to build the array of character codes
+const lowerCaseCode = myArray(97, 122);
+const upperCaseCode = myArray(65, 90);
 const numericCode = myArray(48, 57);
 const specialCode = myArray(33, 47).concat(
                   myArray(58,64)).concat(
@@ -12,50 +14,98 @@ const specialCode = myArray(33, 47).concat(
                   myArray(123,126));
 
 
+//write functions to get random values by type
+function getRandomNumber(){
+  return String.fromCharCode(numericCode[Math.floor(Math.random() * numericCode.length)]); 
+}
 
+function getRandomLower(){
+  return String.fromCharCode(lowerCaseCode[Math.floor(Math.random() * lowerCaseCode.length)]); 
+}
+
+function getRandomUpper(){
+  return String.fromCharCode(upperCaseCode[Math.floor(Math.random() * upperCaseCode.length)]); 
+}
+
+function getRandomSpecial(){
+  return String.fromCharCode(specialCode[Math.floor(Math.random() * specialCode.length)]); 
+}
+
+
+//validate the integer input
+function getInteger(){
+  while(true){   	  
+    let input = prompt("Input number: ");
+    input=parseInt(input);
+    if (isNaN(input))
+      {
+      alert("The input cannot be parsed to a number");
+      }
+    else
+      {
+      if (input == 0)
+        {
+        alert("The number is zero");
+        }
+      else if (input < 8) {
+        alert("The number cannot be less than 8");
+      }
+      else if (input > 128) {
+        alert("The number cannot be more than 128");
+      }
+      else{
+        break;
+      }
+      } 
+    }       
+}
 
 //create generatePassowrd function
 function generatePassword() {
 
-  //console.log("button is clicked");
-  //console.log(specialCode);
+  //get length and types
+  var generatedPassword = '';
+  var passwordlength= getInteger();
+  var blUpper = confirm ("Would you like to include upper case characters?")
+  var blLower = confirm ("Would you like to include lower case characters?")
+  var blSpecial = confirm ("Would you like to include special case characters?")
+  var blNumeric = confirm ("Would you like to include Numbers?")
+  
+  //get how many types are needed
+  var iTypes = 0;
+  if (blUpper) {iTypes++};
+  if (blLower) {iTypes++};
+  if (blSpecial) {iTypes++};
+  if (blNumeric) {iTypes++};
 
-  //prompt the user for the length of the password between 8 & 128
-  var passwordCharacters = []
-  var passwordlength=8
-  var blUpper = true
-  var blLower = true
-  var blSpecial = true
-  var blNumeric = true
-  //Include Lower case, upper case, numeric & special characters
-
-  //validate the input length and at least one character type is selected
-  //generate the password
-  var RandCharacters=[];
-  //concatinate all the asci codes for the characters
-  if (blUpper) {RandCharacters=RandCharacters.concat(upperCaseCode)};
-  if (blLower) {RandCharacters=RandCharacters.concat(lowerCaseCode)};
-  if (blNumeric) {RandCharacters=RandCharacters.concat(numericCode)};
-  if (blSpecial) {RandCharacters=RandCharacters.concat(specialCode)};
-
-  //console.log(RandCharacters);
-  //loop through the concatinated characters and create a temp character
-  for (var i = 0; i < passwordlength; i++){
-    var aCharacter = RandCharacters[Math.floor(Math.random() * RandCharacters.length)]; 
-    passwordCharacters.push(aCharacter);
+  //if none of the types are selected, return empty string
+  if(iTypes === 0) {
+    return '';
   }
 
-  console.log(passwordCharacters.join());
-  console.log(String.fromCharCode(passwordCharacters.join()));
+  //generate password
+  for(var i=0; i < passwordlength; i += iTypes) {
+    if (blUpper) {
+      generatedPassword += getRandomUpper();
+    }
 
-  //console.log(String.fromCharCode(passwordCharacters.join()));
-  //var str=String.fromCharCode(passwordCharacters.join());
-  //console.log(str);
-  //console.log(str.join(''));
+    if (blLower) {
+      generatedPassword += getRandomLower();
+    }
+
+    if (blNumeric) {
+      generatedPassword += getRandomNumber();
+    }
+
+    if (blSpecial) {
+      generatedPassword += getRandomSpecial();
+    }
+  }
+
+  console.log(generatedPassword);
+
+  return generatedPassword;
   
-  //return password
-
-  //return passwordCharacters.join('');
 }
 
 
@@ -77,7 +127,6 @@ function writePassword() {
 
   //writes the password into a screen
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
