@@ -7,7 +7,7 @@
 
 
 ## Overview
-* Students are required to odify the JavaScript file to create user prompts to define the password criteria, such as Length, and character types.
+* Students are required to modify the JavaScript file to create user prompts to define the password criteria, such as Length, and character types.
 * Build functions to generate the password
 
 ## User Story
