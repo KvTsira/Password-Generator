@@ -1,5 +1,3 @@
-// Assignment code here
-
 
 // Get references to the #generate  (button)
 var generateBtn = document.querySelector("#generate");
@@ -39,7 +37,7 @@ function getInteger(){
     input=parseInt(input);
     if (isNaN(input))
       {
-      alert("The input cannot be parsed to a number");
+      return 0;
       }
     else
       {
@@ -54,7 +52,7 @@ function getInteger(){
         alert("The number cannot be more than 128");
       }
       else{
-        break;
+        return input;
       }
       } 
     }       
@@ -66,6 +64,11 @@ function generatePassword() {
   //get length and types
   var generatedPassword = '';
   var passwordlength= getInteger();
+  if (passwordlength===0){
+    //if length prompt was cancelled, terminate the program
+    window.alert("Password length  is a requires element. The program will terminate now");
+    return ''
+  };
   var blUpper = confirm ("Would you like to include upper case characters?")
   var blLower = confirm ("Would you like to include lower case characters?")
   var blSpecial = confirm ("Would you like to include special case characters?")
@@ -80,6 +83,8 @@ function generatePassword() {
 
   //if none of the types are selected, return empty string
   if(iTypes === 0) {
+    //if no types were selected, terminate the program
+    window.alert ("The password should have at least one character type selected. The program will terminate now")
     return '';
   }
 
@@ -105,9 +110,7 @@ function generatePassword() {
   console.log(generatedPassword);
 
   return generatedPassword;
-  
 }
-
 
 //function that creates an array
 function myArray(startNo, endNo){
